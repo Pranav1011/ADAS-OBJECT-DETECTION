@@ -58,10 +58,10 @@ class DataAugmentation:
 
             # Geometric transforms
             A.HorizontalFlip(p=0.5),
-            A.ShiftScaleRotate(
-                shift_limit=0.1,
-                scale_limit=0.2,
-                rotate_limit=0,  # No rotation for driving scenes
+            A.Affine(
+                translate_percent={"x": (-0.1, 0.1), "y": (-0.1, 0.1)},
+                scale=(0.8, 1.2),
+                rotate=0,  # No rotation for driving scenes
                 border_mode=cv2.BORDER_CONSTANT,
                 p=0.5
             ),
@@ -88,13 +88,12 @@ class DataAugmentation:
                 A.MedianBlur(blur_limit=3, p=1.0),
             ], p=0.2),
 
-            A.GaussNoise(var_limit=(10, 50), p=0.2),
+            A.GaussNoise(std_range=(0.02, 0.1), p=0.2),  # Normalized std range
 
             # Weather simulation (important for ADAS robustness)
             A.OneOf([
                 A.RandomRain(
-                    slant_lower=-10,
-                    slant_upper=10,
+                    slant_range=(-10, 10),
                     drop_length=20,
                     drop_width=1,
                     drop_color=(200, 200, 200),
@@ -104,23 +103,18 @@ class DataAugmentation:
                     p=1.0
                 ),
                 A.RandomFog(
-                    fog_coef_lower=0.1,
-                    fog_coef_upper=0.3,
+                    fog_coef_range=(0.1, 0.3),
                     alpha_coef=0.1,
                     p=1.0
                 ),
                 A.RandomSunFlare(
                     flare_roi=(0, 0, 1, 0.5),  # Upper half of image
-                    angle_lower=0.5,
                     src_radius=100,
-                    num_flare_circles_lower=1,
-                    num_flare_circles_upper=2,
+                    num_flare_circles_range=(1, 2),
                     p=1.0
                 ),
                 A.RandomShadow(
                     shadow_roi=(0, 0.5, 1, 1),  # Lower half
-                    num_shadows_lower=1,
-                    num_shadows_upper=2,
                     shadow_dimension=5,
                     p=1.0
                 ),
@@ -128,13 +122,10 @@ class DataAugmentation:
 
             # Occlusion simulation (random erasing)
             A.CoarseDropout(
-                max_holes=8,
-                max_height=32,
-                max_width=32,
-                min_holes=1,
-                min_height=8,
-                min_width=8,
-                fill_value=0,
+                num_holes_range=(1, 8),
+                hole_height_range=(8, 32),
+                hole_width_range=(8, 32),
+                fill=0,  # Fill with black
                 p=0.2
             ),
 

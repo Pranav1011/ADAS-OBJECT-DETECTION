@@ -1,0 +1,9 @@
+# GPU-specific requirements (NVIDIA CUDA)
+# Install on cloud GPU instances
+
+# TensorRT (requires CUDA)
+tensorrt>=8.6.0
+torch-tensorrt>=1.4.0
+
+# Intel Neural Compressor (optional, for additional quantization)
+# neural-compressor>=2.3.0

@@ -1,0 +1,49 @@
+# YOLOv8 Training Configuration
+
+# Model
+model: yolov8m.pt        # Medium variant - good accuracy/speed balance
+pretrained: true         # Use pretrained COCO weights
+
+# Training
+epochs: 100
+batch: 16                # Adjust based on GPU memory (8 for T4, 16+ for A100)
+imgsz: 640               # Input image size
+patience: 20             # Early stopping patience
+
+# Optimizer
+optimizer: AdamW
+lr0: 0.001               # Initial learning rate
+lrf: 0.01                # Final learning rate (lr0 * lrf)
+momentum: 0.9
+weight_decay: 0.0005
+warmup_epochs: 5
+warmup_momentum: 0.8
+cos_lr: true             # Cosine annealing scheduler
+
+# Loss weights
+box: 7.5                 # Box loss weight
+cls: 0.5                 # Classification loss weight
+dfl: 1.5                 # Distribution focal loss weight
+
+# Augmentation (YOLOv8 built-in)
+hsv_h: 0.015             # Hue augmentation
+hsv_s: 0.7               # Saturation augmentation
+hsv_v: 0.4               # Value augmentation
+degrees: 0.0             # Rotation (+/- degrees)
+translate: 0.1           # Translation (+/- fraction)
+scale: 0.5               # Scale (+/- gain)
+shear: 0.0               # Shear (+/- degrees)
+perspective: 0.0         # Perspective (+/- fraction)
+flipud: 0.0              # Vertical flip probability
+fliplr: 0.5              # Horizontal flip probability
+mosaic: 1.0              # Mosaic augmentation probability
+mixup: 0.0               # Mixup augmentation probability
+copy_paste: 0.0          # Copy-paste augmentation probability
+
+# Other
+device: auto             # 'auto', 'cpu', 'cuda:0', 'mps'
+workers: 8               # DataLoader workers
+project: runs/train      # Save directory
+name: yolov8m-bdd100k    # Experiment name
+exist_ok: true           # Overwrite existing experiment
+verbose: true

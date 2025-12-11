@@ -1,0 +1,5 @@
+# Mac-specific requirements (Apple Silicon)
+# Install after main requirements.txt
+
+# CoreML conversion
+coremltools>=7.0.0

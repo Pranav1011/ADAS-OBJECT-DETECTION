@@ -1,0 +1,33 @@
+# BDD100K Dataset Configuration for YOLOv8
+# This file will be updated with actual paths after data download
+
+path: ../data/processed  # Dataset root directory
+train: images/train      # Train images (relative to 'path')
+val: images/val          # Val images (relative to 'path')
+
+# Classes - 8 key ADAS classes from BDD100K
+names:
+  0: car
+  1: truck
+  2: bus
+  3: pedestrian
+  4: cyclist
+  5: motorcycle
+  6: traffic_light
+  7: traffic_sign
+
+# Number of classes
+nc: 8
+
+# BDD100K to YOLO class mapping
+# BDD100K uses different naming, this maps to our indices
+bdd100k_mapping:
+  car: 0
+  truck: 1
+  bus: 2
+  person: 3        # BDD100K uses 'person', we call it 'pedestrian'
+  rider: 4         # BDD100K 'rider' maps to cyclist
+  bike: 5          # motorcycle
+  motor: 5         # also motorcycle
+  traffic light: 6
+  traffic sign: 7

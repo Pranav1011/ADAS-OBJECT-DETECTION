@@ -1,0 +1,15 @@
+# ============================================
+# NVIDIA CUDA / Cloud GPU Specific
+# ============================================
+
+# TensorRT for NVIDIA optimization
+tensorrt>=8.6.0
+torch-tensorrt>=2.0.0
+
+# CUDA-optimized ONNX Runtime
+onnxruntime-gpu>=1.16.0
+
+# Note: For cloud deployment:
+# - Use on AWS (g4dn, p3), GCP (T4, A100), Azure (NC series)
+# - TensorRT gives 2-4x speedup over PyTorch
+# - INT8 quantization for production inference

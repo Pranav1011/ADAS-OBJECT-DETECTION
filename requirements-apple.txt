@@ -1,0 +1,14 @@
+# ============================================
+# Apple Silicon (M1/M2/M3) Specific
+# ============================================
+
+# CoreML for Apple Neural Engine
+coremltools>=7.0.0
+
+# MPS (Metal Performance Shaders) optimizations
+# Already included in PyTorch - no extra package needed
+
+# Note: For best performance on Apple Silicon:
+# - Use device='mps' in PyTorch
+# - Export to CoreML for production deployment
+# - Batch size 8-16 works well on M3 Pro (18GB RAM)

@@ -2,7 +2,7 @@
 # ADAS Object Detection - Makefile
 # ============================================
 
-.PHONY: help install install-dev install-apple setup data train evaluate export quantize benchmark api demo test lint clean
+.PHONY: help install install-dev install-apple setup data data-local train evaluate export quantize benchmark api demo test lint clean
 
 PYTHON := python
 PIP := pip
@@ -20,7 +20,8 @@ help:
 	@echo "  make setup          Full setup (install + download data)"
 	@echo ""
 	@echo "Data:"
-	@echo "  make data           Download and prepare dataset"
+	@echo "  make data           Show BDD100K download info"
+	@echo "  make data-local     Convert local BDD100K to YOLO format"
 	@echo "  make data-sample    Download sample data for testing"
 	@echo ""
 	@echo "Training:"
@@ -80,6 +81,23 @@ data-convert:
 
 data-sample:
 	$(PYTHON) scripts/download_sample_data.py --with-annotations
+
+# Local data setup - adjust paths to your BDD100K location
+# Example: IMAGES=/path/to/bdd100k/images/100k LABELS=/path/to/bdd100k/labels/det_20 make data-local
+data-local:
+	@if [ -z "$(IMAGES)" ] || [ -z "$(LABELS)" ]; then \
+		echo "Usage: IMAGES=/path/to/images LABELS=/path/to/labels make data-local"; \
+		echo ""; \
+		echo "Example:"; \
+		echo "  IMAGES=~/Downloads/bdd100k/images/100k LABELS=~/Downloads/bdd100k/labels/det_20 make data-local"; \
+		exit 1; \
+	fi
+	$(PYTHON) scripts/setup_local_data.py \
+		--images-dir $(IMAGES) \
+		--labels-dir $(LABELS) \
+		--output-dir data/processed \
+		--num-train 8000 \
+		--num-val 2000
 
 # ============================================
 # Training

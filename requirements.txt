@@ -11,7 +11,7 @@ ultralytics>=8.0.0          # YOLOv8 - state of the art object detection
 # ONNX Ecosystem
 onnx>=1.14.0
 onnxruntime>=1.16.0         # Cross-platform inference
-onnxsim>=0.4.33             # ONNX model simplification
+# onnxsim>=0.4.33           # Optional: requires cmake (brew install cmake)
 
 # Computer Vision
 opencv-python>=4.8.0
